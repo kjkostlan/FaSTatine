@@ -1,0 +1,12 @@
+Numpy integer arrays are so fast! But we need to know what token type integers coorespond to:
+This legend should work for all common programming languages.
+A couple of categories may need to be added.
+0. Whitespace and token delimiters. Includes newline, commas, :;, etc. Only when outside of a string literal, a comment, etc.
+1. Symbols (unsigned int foo) are all symbols. Includes keywords such as "else". Includes +=*, etc in lispy languages. Includes type declaration.
+2. Operators and decorators (*, =, /, +, -, etc for nonlisp languages). * in "int* foo" ad @ in Python.
+3. Literals (numbers, strings, etc). Does not include keywords (includes Clojure keywords).
+4. = Opening braces (Python space indent levels are handled as a seperate array).
+5. Closing braces. Includes the C++ <Templates>.
+6. Comments (includes the initial #, //, etc but not the newline at the end of the line).
+7. Clojure's metadata ^ and Python's @ (TODO).
+8. This list will be expanded if there is reasonable need to do so.
