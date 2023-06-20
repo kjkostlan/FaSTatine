@@ -9,9 +9,9 @@
 #https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
 #https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
 #https://linuxhint.com/simulate-bash-array-of-arrays/     Bash has no nested arrays!?
-import sys, re, numba, copy
+import sys, re, numba
 import numpy as np
-from . import pyparse
+from . import python_parse
 
 # False: Bash behaves more consistently and intuitivly.
 # True: Bash behaves more like Bash.
@@ -102,7 +102,7 @@ def _fsm_core_bash(x):
     freshness_deluxe = 1 # The first command in a line or $() or after-; is not quote=3 but instead a symbol.
     paren_lev = 0
     in_multiplex_brace = 0
-    aln = pyparse.alphanum_status(x)
+    aln = python_parse.alphanum_status(x)
 
     N = len(x)
 
