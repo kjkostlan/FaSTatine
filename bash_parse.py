@@ -220,7 +220,7 @@ def _fsm_core_bash(x):
 
     return token_types, inclusive_paren_nests, quote_types
 
-def fsm_parse_bash(txt):
+def fsm_parse(txt):
     #token, paren, quote_type
     x = np.frombuffer(txt.encode('UTF-32-LE'), dtype=np.uint32)
     return _fsm_core_bash(x)

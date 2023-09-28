@@ -145,6 +145,9 @@ def fsm_parse(txt):
     x = np.frombuffer(txt.encode('UTF-32-LE'), dtype=np.uint32)
     return _fsm_core(x)
 
+################################# Extra functions ##############################
+######## (don't go too far, there are better more comprehensive tools) #########
+
 def simple_tokens(code):
     # Simple tokenize that tries to isolate vars. Not smart about strings.
     pattern = '[ \n\[\]\{\}\(\)\#:\/\-=\+\%\*<>]+'

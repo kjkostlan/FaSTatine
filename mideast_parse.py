@@ -24,11 +24,11 @@ def _fsm_core(x):
             token_types[i] = 3
         elif ci == 46 or ci == 58 or ci == 59 or ci == 33 or ci == 44 or ci == 63 or ci == 0x00BF: # Punctuation
             token_types[i] = 0 # Also 0.
-        elif ci == 40 or ci == 91 or ci == 123:
+        elif ci == 40 or ci == 91 or ci == 123: #([{
             token_types[i] = 4
             paren_lev = paren_lev + 1
             inclusive_paren_nests[i] = paren_lev
-        elif ci == 41 or ci == 93 or ci == 125:
+        elif ci == 41 or ci == 93 or ci == 125: #)]}
             paren_lev = paren_lev - 1
         else:
             token_types[i] = 1
