@@ -1,5 +1,3 @@
-# Simple bash-like parsing tools and Python vs bash dection.
-# Used in the command line to convert slick bash one-liners to Python and save typing.
 # DEFINITELY NOT intended to be a comprehensive bash parser or intrepreter.
 # But 90% of what a user types into a bash shell is <10% of the full syntax and is one-line cmds.
     # (And I don't know enough bash!)
