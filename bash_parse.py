@@ -11,66 +11,6 @@ import sys, re, numba
 import numpy as np
 from . import python_parse
 
-# False: Bash behaves more consistently and intuitivly.
-# True: Bash behaves more like Bash.
-strict_mode = False
-
-################################### The BASH-runtime world ########################
-
-def BRG(start, end, step=1):
-    # Bash range. Can be letter or number range.
-    if type(start) is str:
-        return [chr(i) for i in range(ord(start),ord(end),step)]
-    else:
-        return list(range(start, end, step))
-
-def BVC(*items):
-    return items
-
-def BEX(*items):
-    # Brace expansion. Odd indexes are expanded.
-    # See: https://unix.stackexchange.com/questions/402315/nested-brace-expansion-mystery-in-bash
-    dims = len(items)
-    items1 = []
-    if dims==0:
-        return ''
-    kvals = []
-    for i in range(dims):
-        if i%2==0:
-            kvals.append(1)
-            items1.append([str(items[i])])
-        elif type(items[i]) is list or type(items[i]) is tuple:
-            kvals.append(len(items[i]))
-            items1.append([str(itm) for itm in items[i]])
-        else:
-            kvals.append(1)
-            items1.append([str(items[i])])
-
-    ixss = [x.ravel(order='F') for x in np.meshgrid(*[np.arange(k) for k in kvals])]
-    out = []
-    for i in range(len(ixss)):
-        ixs = [ixss[o][i] for o in range(dims)]
-        out.append(''.join([items1[j] for j in range(dims)]))
-
-    return out
-
-def BCT(*items):
-    # Concatenation with string output.
-    return ' '.join(items)
-
-def BIF(cond, if_true, if_false):
-    # Requires wrapping the true and false in lambdas.
-    return if_true() if bool(cond) else if_false()
-
-def add_bash_syntax_fns(module_name):
-    # setattr for functions with specific bash syntatical constructs, such as A{1,2}B
-    m = sys.modules[module_name]
-    fns = {'BRG':BRG,'BVC':BVC,'BEX':BEX,'BCT':BCT,'BIF':BIF}
-    for k,v in fns.items():
-        setattr(m, k, v)
-
-################################### The BASH-compiletime world ########################
-
 class Symbol:
     # Symbols are string literals except that they don't get quoted.
     def __init__(self, val):
