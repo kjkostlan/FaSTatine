@@ -1,5 +1,5 @@
 # testing the parsers.
-from . import python_parse, bashparse
+from . import python_parse, bash_parse
 import numpy as np
 
 def ints_eq(a,b):
@@ -383,4 +383,16 @@ def bar(z): # Bar code
     out = out and '\n            ping(self' in defsA['Vehicle.motor'] and '\n   DOT-approved' in defsA['Vehicle.motor']
     out = out and 'cycling = 20' in defs['bar']
 
+    txt = '''
+def foo(x,y,z=w):
+    '''
+    ags = python_parse.list_args(txt)
+    out = out and ags == ['x','y','z=w']
+
+    txt = '''
+def bar(a, b, # Is bar any better than foo?
+        *xyz, **wxyz):
+    '''
+    ags = python_parse.list_args(txt)
+    out = out and ags == ['a','b','*xyz','**wxyz']
     return out

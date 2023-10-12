@@ -274,3 +274,14 @@ def get_main_blocks(txt):
         return _rep(no_comment)==_rep(gold)
     main_contents = statement_contents(txt, _line_f, dedent=True)
     return main_contents
+
+def list_args(defblock):
+    # def foo(a,b,c=d) => ['a','b','c=d']
+    defblock = defblock.strip()+'\n()'
+    lines1 = [(l+'#') for l in defblock.split('\n')]
+    lines2 = [l[0:l.find('#')] for l in lines1]
+    defblock1 = '\n'.join(lines2).replace('\t',' ').replace('\r', ' ').replace('\n', ' ')
+    comma_sep = defblock1[defblock1.find('(')+1:defblock1.find(')')]
+
+    argvec = comma_sep.split(',')
+    return [a.replace(' ','') for a in argvec]
